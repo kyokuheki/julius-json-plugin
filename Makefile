@@ -1,0 +1,42 @@
+SHELL=/bin/sh
+
+.SUFFIXES:
+.SUFFIXES: .c .jpi
+.c.jpi:
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
+
+JULIUS_SRC=https://github.com/julius-speech/julius/archive/v4.4.2.1.tar.gz
+JULIUS_DIR=./julius
+
+CC=gcc
+CFLAGS=-bundle -flat_namespace -undefined suppress
+LDFLAGS=
+J_CFLAGS=-I$(JULIUS_DIR)/libsent/include -I$(JULIUS_DIR)/libjulius/include `$(JULIUS_DIR)/libsent/libsent-config --cflags` `$(JULIUS_DIR)/libjulius/libjulius-config --cflags`
+J_LDFLAGS=-L$(JULIUS_DIR)/libjulius `$(JULIUS_DIR)/libjulius/libjulius-config --libs` -L$(JULIUS_DIR)/libsent `$(JULIUS_DIR)/libsent/libsent-config --libs`
+
+all: output_json.jpi
+
+parson.c:
+	wget -O parson.c https://raw.githubusercontent.com/kgabis/parson/master/parson.c
+	touch $@
+
+parson.h:
+	wget -O parson.h https://raw.githubusercontent.com/kgabis/parson/master/parson.h
+	touch $@
+
+julius.tar.gz:
+	curl -sSL $(JULIUS_SRC) -o julius.tar.gz
+	touch $@
+
+.PHONY: julius
+julius: julius.tar.gz
+	-mkdir $(JULIUS_DIR)
+	tar -xzf julius.tar.gz -C $(JULIUS_DIR) --strip-components=1
+	cd ./julius; ./configure; make libjulius libsent
+	#make libsent-config libjulius-config
+
+output_json.jpi: output_json.c parson.c parson.h julius
+	$(CC) $(CFLAGS) $(J_CFLAGS) -o output_json.jpi output_json.c parson.c $(LDFLAGS) $(J_LDFLAGS)
+
+clean:
+	rm *.jpi
