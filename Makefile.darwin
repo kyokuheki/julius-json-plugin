@@ -29,7 +29,7 @@ julius.tar.gz:
 	touch $@
 
 .PHONY: julius
-julius: julius.tar.gz
+julius/libjulius/libjulius.a julius/libsent/libsent.a: julius.tar.gz
 	-mkdir $(JULIUS_DIR)
 	tar -xzf julius.tar.gz -C $(JULIUS_DIR) --strip-components=1
 	cd ./julius; ./configure; make libjulius libsent
