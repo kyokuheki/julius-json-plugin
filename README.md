@@ -20,8 +20,8 @@ unzip dictation-kit-4.5.zip
 cd dictation-kit-4.5
 chmod +x bin/*/julius
 
-# specify plugindir and add -json option to use julius-json-plugin
-./bin/osx/julius -C main.jconf -C am-gmm.jconf -demo -plugindir ~/your_workspace/julius-json-plugin -json
+# specify plugindir to use julius-json-plugin
+./bin/osx/julius -C main.jconf -C am-gmm.jconf -demo -plugindir ~/your_workspace/julius-json-plugin
 ```
 
 ## How to build
@@ -36,10 +36,10 @@ ls -al output_json.jpi
 ```
 
 ## Usage
-Specify plugindir and add -json option if you use this plugin. 
+Specify plugindir if you use this plugin. 
 
 ```shell
-julius -plugindir /path/to/dir/of/output_json.jpi -json ...
+julius -plugindir /path/to/dir/of/output_json.jpi ...
 ```
 
 ## Example of output
