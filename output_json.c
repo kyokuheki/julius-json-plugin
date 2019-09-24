@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include "parson.h"
 
-extern boolean separate_score_flag;
 static int outout_json_flag = 0;
 static JSON_Value *root_value = NULL;
 static JSON_Object *root_object = NULL;
