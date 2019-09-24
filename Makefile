@@ -28,14 +28,13 @@ julius.tar.gz:
 	curl -sSL $(JULIUS_SRC) -o julius.tar.gz
 	touch $@
 
-.PHONY: julius
 julius/libjulius/libjulius.a julius/libsent/libsent.a: julius.tar.gz
 	-mkdir $(JULIUS_DIR)
 	tar -xzf julius.tar.gz -C $(JULIUS_DIR) --strip-components=1
 	cd ./julius; CFLAGS=-fPIC ./configure; make libjulius libsent
 	#make libsent-config libjulius-config
 
-output_json.jpi: output_json.c parson.c parson.h julius
+output_json.jpi: output_json.c parson.c parson.h julius/libjulius/libjulius.a julius/libsent/libsent.a
 	$(CC) $(CFLAGS) $(J_CFLAGS) -o output_json.jpi parson.c output_json.c $(LDFLAGS) $(J_LDFLAGS)
 
 clean:
