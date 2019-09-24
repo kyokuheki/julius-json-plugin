@@ -10,7 +10,7 @@ cd ~/your_workspace
 # build julius-json-plugin
 git clone git@github.com:kyokuheki/julius-json-plugin.git
 cd julius-json-plugin
-make
+make -f Makefile.darwin
 ls -al output_json.jpi
 
 # get latest dictation-kit
@@ -31,7 +31,10 @@ mkdir ~/your_workspace
 cd ~/your_workspace
 git clone git@github.com:kyokuheki/julius-json-plugin.git
 cd julius-json-plugin
+# if Linux
 make
+# if macOS
+make -f Makefile.darwin
 ls -al output_json.jpi
 ```
 
