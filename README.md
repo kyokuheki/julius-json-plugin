@@ -18,7 +18,7 @@ cd ~/your_workspace
 wget https://osdn.net/dl/julius/dictation-kit-4.5.zip
 unzip dictation-kit-4.5.zip
 cd dictation-kit-4.5
-chmod +x bin/osx/julius
+chmod +x bin/*/julius
 
 # specify plugindir and add -json option to use julius-json-plugin
 ./bin/osx/julius -C main.jconf -C am-gmm.jconf -demo -plugindir ~/your_workspace/julius-json-plugin -json
