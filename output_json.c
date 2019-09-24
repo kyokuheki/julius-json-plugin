@@ -328,14 +328,12 @@ result_pass2_old(Recog *recog, void *dummy)
       jsonify_float("SCORE", s->score);
       json_object_set_number(shypo_object, "SCORE", s->score);
       if (r->lmtype == LM_PROB) {
-        if (separate_score_flag) {
-          jsonify_sep();
-          jsonify_float("AMSCORE", s->score_am);
-          json_object_set_number(shypo_object, "AMSCORE", s->score_am);
-          jsonify_sep();
-          jsonify_float("LMSCORE", s->score_lm);
-          json_object_set_number(shypo_object, "LMSCORE", s->score_lm);
-        }
+        jsonify_sep();
+        jsonify_float("AMSCORE", s->score_am);
+        json_object_set_number(shypo_object, "AMSCORE", s->score_am);
+        jsonify_sep();
+        jsonify_float("LMSCORE", s->score_lm);
+        json_object_set_number(shypo_object, "LMSCORE", s->score_lm);
       }
       if (r->lmtype == LM_DFA) {
         /* output which grammar the best hypothesis belongs to */
@@ -454,10 +452,8 @@ result_pass2(Recog *recog, void *dummy)
 #endif
       json_object_set_number(shypo_object, "SCORE", s->score);
       if (r->lmtype == LM_PROB) {
-        if (separate_score_flag) {
-          json_object_set_number(shypo_object, "AMSCORE", s->score_am);
-          json_object_set_number(shypo_object, "LMSCORE", s->score_lm);
-        }
+        json_object_set_number(shypo_object, "AMSCORE", s->score_am);
+        json_object_set_number(shypo_object, "LMSCORE", s->score_lm);
       }
       if (r->lmtype == LM_DFA) {
         /* output which grammar the best hypothesis belongs to */
