@@ -5,12 +5,11 @@ SHELL=/bin/sh
 .c.jpi:
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
-JULIUS_SRC=https://github.com/julius-speech/julius/archive/v4.4.2.1.tar.gz
+JULIUS_SRC=https://github.com/julius-speech/julius/archive/v4.5.tar.gz
 JULIUS_DIR=./julius
 
 CC=gcc
-#CFLAGS=-bundle -flat_namespace -undefined suppress
-CFLAGS=-shared -fPIC
+CFLAGS=-fPIC -shared
 LDFLAGS=
 J_CFLAGS=-I$(JULIUS_DIR)/libsent/include -I$(JULIUS_DIR)/libjulius/include `$(JULIUS_DIR)/libsent/libsent-config --cflags` `$(JULIUS_DIR)/libjulius/libjulius-config --cflags`
 J_LDFLAGS=-L$(JULIUS_DIR)/libjulius `$(JULIUS_DIR)/libjulius/libjulius-config --libs` -L$(JULIUS_DIR)/libsent `$(JULIUS_DIR)/libsent/libsent-config --libs`
@@ -33,7 +32,7 @@ julius.tar.gz:
 julius: julius.tar.gz
 	-mkdir $(JULIUS_DIR)
 	tar -xzf julius.tar.gz -C $(JULIUS_DIR) --strip-components=1
-	cd ./julius; CFLAGS=-fPIC ./configure --enable-shared; make libjulius libsent
+	cd ./julius; CFLAGS=-fPIC ./configure; make libjulius libsent
 	#make libsent-config libjulius-config
 
 output_json.jpi: output_json.c parson.c parson.h julius
