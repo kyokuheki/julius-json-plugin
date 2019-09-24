@@ -9,7 +9,7 @@ JULIUS_SRC=https://github.com/julius-speech/julius/archive/v4.5.tar.gz
 JULIUS_DIR=./julius
 
 CC=gcc
-CFLAGS=-fPIC -shared
+CFLAGS=-bundle -flat_namespace -undefined suppress
 LDFLAGS=
 J_CFLAGS=-I$(JULIUS_DIR)/libsent/include -I$(JULIUS_DIR)/libjulius/include `$(JULIUS_DIR)/libsent/libsent-config --cflags` `$(JULIUS_DIR)/libjulius/libjulius-config --cflags`
 J_LDFLAGS=-L$(JULIUS_DIR)/libjulius `$(JULIUS_DIR)/libjulius/libjulius-config --libs` -L$(JULIUS_DIR)/libsent `$(JULIUS_DIR)/libsent/libsent-config --libs`
@@ -32,11 +32,11 @@ julius.tar.gz:
 julius/libjulius/libjulius.a julius/libsent/libsent.a: julius.tar.gz
 	-mkdir $(JULIUS_DIR)
 	tar -xzf julius.tar.gz -C $(JULIUS_DIR) --strip-components=1
-	cd ./julius; CFLAGS=-fPIC ./configure; make libjulius libsent
+	cd ./julius; ./configure; make libjulius libsent
 	#make libsent-config libjulius-config
 
 output_json.jpi: output_json.c parson.c parson.h julius
-	$(CC) $(CFLAGS) $(J_CFLAGS) -o output_json.jpi parson.c output_json.c $(LDFLAGS) $(J_LDFLAGS)
+	$(CC) $(CFLAGS) $(J_CFLAGS) -o output_json.jpi output_json.c parson.c $(LDFLAGS) $(J_LDFLAGS)
 
 clean:
 	rm *.jpi

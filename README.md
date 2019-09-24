@@ -10,7 +10,7 @@ cd ~/your_workspace
 # build julius-json-plugin
 git clone git@github.com:kyokuheki/julius-json-plugin.git
 cd julius-json-plugin
-make
+make -f Makefile.darwin
 ls -al output_json.jpi
 
 # get latest dictation-kit
@@ -18,10 +18,10 @@ cd ~/your_workspace
 wget https://osdn.net/dl/julius/dictation-kit-4.5.zip
 unzip dictation-kit-4.5.zip
 cd dictation-kit-4.5
-chmod +x bin/osx/julius
+chmod +x bin/*/julius
 
-# specify plugindir and add -json option to use julius-json-plugin
-./bin/osx/julius -C main.jconf -C am-gmm.jconf -demo -plugindir ~/your_workspace/julius-json-plugin -json
+# specify plugindir to use julius-json-plugin
+./bin/osx/julius -C main.jconf -C am-gmm.jconf -demo -plugindir ~/your_workspace/julius-json-plugin
 ```
 
 ## How to build
@@ -31,15 +31,18 @@ mkdir ~/your_workspace
 cd ~/your_workspace
 git clone git@github.com:kyokuheki/julius-json-plugin.git
 cd julius-json-plugin
+# if Linux
 make
+# if macOS
+make -f Makefile.darwin
 ls -al output_json.jpi
 ```
 
 ## Usage
-Specify plugindir and add -json option if you use this plugin. 
+Specify plugindir if you use this plugin. 
 
 ```shell
-julius -plugindir /path/to/dir/of/output_json.jpi -json ...
+julius -plugindir /path/to/dir/of/output_json.jpi ...
 ```
 
 ## Example of output
